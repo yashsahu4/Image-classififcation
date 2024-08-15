@@ -11,7 +11,7 @@ st.write("Upload an image to classify it using your trained model.")
 # Load your pre-trained model
 @st.cache_resource  # Cache the model to avoid reloading it on every run
 def load_trained_model():
-    model = load_model("/content/my_model.keras")  # Replace with your model's path
+    model = load_model("my_model.keras")  # Replace with your model's path
     return model
 
 model = load_trained_model()

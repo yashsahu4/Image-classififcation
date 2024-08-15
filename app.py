@@ -1,6 +1,6 @@
 import streamlit as st
 from keras.models import load_model
-from keras.preprocessing.image import load_img, img_to_array
+from keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 
@@ -9,15 +9,17 @@ st.title("Image Classification with Keras")
 st.write("Upload an image to classify it using your trained model.")
 
 # Load your pre-trained model
-@st.cache_resource  # Cache the model to avoid reloading it on every run
+@st.cache_resource
 def load_trained_model():
-    model = load_model("my_model.keras")  # Replace with your model's path
+    model = load_model("my_model.keras")  # Ensure this path is correct
     return model
 
 model = load_trained_model()
 
 # Image preprocessing function
 def preprocess_image(image):
+    if image.mode != 'RGB':
+        image = image.convert('RGB')  # Convert grayscale to RGB if needed
     image = image.resize((64, 64))  # Resize the image to the input shape expected by your model
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)

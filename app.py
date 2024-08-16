@@ -11,16 +11,16 @@ st.write("Upload an image to classify it using your trained model.")
 # Load your pre-trained model
 @st.cache_resource
 def load_trained_model():
-    model = load_model("baseline (1).keras")  # Ensure this path is correct
+    model = load_model("/content/baseline.keras")  # Ensure this path is correct
     return model
 
 model = load_trained_model()
 
 # Image preprocessing function
 def preprocess_image(image):
-    if image.mode != 'L':  # Convert to grayscale if needed
-        image = image.convert('L')
-    image = image.resize((180, 180))  # Resize to match the input shape expected by your model
+    if image.mode != 'L':
+        image = image.convert('L')  # Convert to grayscale
+    image = image.resize((180, 180))  # Resize to match model input shape
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     image = image / 255.0  # Normalize the image
@@ -49,8 +49,8 @@ if uploaded_file is not None:
     # Display the raw prediction
     st.write(f'Raw prediction: {prediction}')
 
-    # Display the result
-    if prediction[0] > 0.5:
+    # Display the result using the threshold of 0.65
+    if prediction[0] > 0.65:
         st.write("The model predicts: **Class 1**")
     else:
         st.write("The model predicts: **Class 0**")

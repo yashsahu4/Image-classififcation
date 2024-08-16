@@ -19,8 +19,8 @@ model = load_trained_model()
 # Image preprocessing function
 def preprocess_image(image):
     if image.mode != 'RGB':
-        image = image.convert('RGB')  # Convert grayscale to RGB if needed
-    image = image.resize((64, 64))  # Resize the image to the input shape expected by your model
+        image = image.convert('RGB')  # Ensure the image is in RGB format
+    image = image.resize((180, 180))  # Resize to match the input shape expected by your model
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     image = image / 255.0  # Normalize the image

@@ -18,14 +18,13 @@ model = load_trained_model()
 
 # Image preprocessing function
 def preprocess_image(image):
-    if image.mode != 'L':  # 'L' is for grayscale
-        image = image.convert('L')  # Convert to grayscale if needed
+    if image.mode != 'L':  # Convert to grayscale if needed
+        image = image.convert('L')
     image = image.resize((180, 180))  # Resize to match the input shape expected by your model
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     image = image / 255.0  # Normalize the image
     return image
-
 
 # File uploader
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -40,8 +39,15 @@ if uploaded_file is not None:
     # Preprocess the image
     processed_image = preprocess_image(image)
 
+    # Display the shape and stats of the processed image for debugging
+    st.write(f'Processed image shape: {processed_image.shape}')
+    st.write(f'Min value: {np.min(processed_image)}, Max value: {np.max(processed_image)}')
+
     # Make predictions
     prediction = model.predict(processed_image)
+
+    # Display the raw prediction
+    st.write(f'Raw prediction: {prediction}')
 
     # Display the result
     if prediction[0] > 0.5:

@@ -33,24 +33,15 @@ if uploaded_file is not None:
     # Display the uploaded image
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image", use_column_width=True)
-    st.write("")
-    st.write("Classifying...")
 
     # Preprocess the image
     processed_image = preprocess_image(image)
 
-    # Display the shape and stats of the processed image for debugging
-    st.write(f'Processed image shape: {processed_image.shape}')
-    st.write(f'Min value: {np.min(processed_image)}, Max value: {np.max(processed_image)}')
-
     # Make predictions
     prediction = model.predict(processed_image)
 
-    # Display the raw prediction
-    st.write(f'Raw prediction: {prediction}')
-
     # Display the result using the threshold of 0.65
-    if prediction[0] > 0.65:
+    if prediction[0] > 0.68:
         st.write("The model predicts: **Class 1**")
     else:
         st.write("The model predicts: **Class 0**")

@@ -11,7 +11,7 @@ st.write("Upload an image to classify it using your trained model.")
 # Load your pre-trained model
 @st.cache_resource
 def load_trained_model():
-    model = load_model("my_model.keras")  # Ensure this path is correct
+    model = load_model("baseline (1).keras")  # Ensure this path is correct
     return model
 
 model = load_trained_model()

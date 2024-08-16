@@ -18,13 +18,14 @@ model = load_trained_model()
 
 # Image preprocessing function
 def preprocess_image(image):
-    if image.mode != 'RGB':
-        image = image.convert('RGB')  # Ensure the image is in RGB format
+    if image.mode != 'L':  # 'L' is for grayscale
+        image = image.convert('L')  # Convert to grayscale if needed
     image = image.resize((180, 180))  # Resize to match the input shape expected by your model
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     image = image / 255.0  # Normalize the image
     return image
+
 
 # File uploader
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
